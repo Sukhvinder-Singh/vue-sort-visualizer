@@ -1,6 +1,6 @@
 <template>
   <button @click="bubbleSort(array)">Start</button>
-  <div class="chart">
+  <div class="chart" ref="chartContainer">
     <span
       class="chart__bar"
       v-for="(val, index) in array"
@@ -16,30 +16,29 @@
 <script setup>
 import { ref } from 'vue'
 
+const chartContainer = ref(null)
+const elementLength = 100
+
 const array = ref(
-  Array(100)
+  Array(elementLength)
     .fill()
-    .map(() => Math.round(Math.random() * 100))
+    .map(() => Math.round(Math.random() * elementLength))
 )
 
-const audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
 
-function playNote(frequency, duration) {
-  // create Oscillator node
-  var oscillator = audioCtx.createOscillator();
-
-  oscillator.type = 'sine';
-  oscillator.frequency.value = frequency; // value in hertz
-  oscillator.connect(audioCtx.destination);
-  oscillator.start();
-
-  setTimeout(
-    function() {
-      oscillator.stop();
-    }, duration);
+function playFrequency(frequency, duration) {
+  const oscillator = audioCtx.createOscillator()
+  oscillator.type = 'sine'
+  oscillator.frequency.value = frequency // value in hertz
+  oscillator.connect(audioCtx.destination)
+  oscillator.start()
+  setTimeout(function () {
+    oscillator.stop()
+  }, duration)
 }
 
-const interval = 25
+const interval = 10
 let promise = Promise.resolve()
 
 function bubbleSort(array) {
@@ -50,8 +49,17 @@ function bubbleSort(array) {
           let temp = array[j]
           array[j] = array[j + 1]
           array[j + 1] = temp
-          playNote(array[j]*50, 10)
+          playFrequency(array[j] * 50, 10)
         }
+
+        chartContainer.value.querySelector(
+          `.chart__bar:nth-of-type(${j + 2})`
+        ).style.backgroundColor = 'red'
+
+        chartContainer.value.querySelector(
+          `.chart__bar:nth-of-type(${j + 1})`
+        ).style.backgroundColor = 'blue'
+
         return new Promise((resolve) => {
           setTimeout(resolve, interval)
         })
@@ -59,7 +67,6 @@ function bubbleSort(array) {
     }
   }
 }
-
 </script>
 
 <style scoped lang="scss">
@@ -72,7 +79,7 @@ function bubbleSort(array) {
     position: absolute;
     bottom: 0;
     display: block;
-    background-color: rgb(0, 89, 255);
+    background-color: blue;
     border: 1px solid #fff;
   }
 }
