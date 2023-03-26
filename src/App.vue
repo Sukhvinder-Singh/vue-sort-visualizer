@@ -19,11 +19,12 @@ import { ref } from 'vue'
 const chartContainer = ref(null)
 const elementLength = 100
 
-const array = ref(
-  Array(elementLength)
-    .fill()
-    .map(() => Math.round(Math.random() * elementLength))
-)
+const array = ref(Array.from({ length: elementLength }, (_, i) => i + 1))
+
+for (let i = array.value.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [array.value[i], array.value[j]] = [array.value[j], array.value[i]];
+}
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
 
