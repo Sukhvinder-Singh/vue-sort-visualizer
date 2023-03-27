@@ -4,10 +4,11 @@
     <span
       class="chart__bar"
       v-for="(val, index) in array"
+      :key="`bar-${index}`"
       :style="{
-        width: `calc(${array.length / 100}% - 2px)`,
-        height: `${val}%`,
-        left: `${(array.length / 100) * index}%`
+        width: `calc(${100 / array.length}% - 2px)`,
+        height: `${(100 / elementLength) * val}%`,
+        left: `${(100 / array.length) * index}%`
       }"
     ></span>
   </div>
@@ -17,13 +18,17 @@
 import { ref } from 'vue'
 
 const chartContainer = ref(null)
-const elementLength = 100
+const elementLength = 300
 
-const array = ref(Array.from({ length: elementLength }, (_, i) => i + 1))
+const array = ref([])
+
+for (let i = 0; i < elementLength; i++) {
+  array.value.push(i + 1)
+}
 
 for (let i = array.value.length - 1; i > 0; i--) {
   const j = Math.floor(Math.random() * (i + 1));
-  [array.value[i], array.value[j]] = [array.value[j], array.value[i]];
+  [array.value[i], array.value[j]] = [array.value[j], array.value[i]]
 }
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)()
@@ -39,7 +44,7 @@ function playFrequency(frequency, duration) {
   }, duration)
 }
 
-const interval = 10
+const interval = 1
 let promise = Promise.resolve()
 
 function bubbleSort(array) {
