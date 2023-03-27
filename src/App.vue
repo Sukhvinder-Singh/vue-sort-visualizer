@@ -82,8 +82,9 @@ function bubbleSort(array) {
           let temp = array[j];
           array[j] = array[j + 1];
           array[j + 1] = temp;
-          playFrequency(array[j] * 50, 10);
         }
+
+        playFrequency(array[j] * 50, 10);
 
         chartContainer.value.querySelector(
           `.chart__bar:nth-of-type(${j + 2})`
