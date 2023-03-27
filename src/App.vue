@@ -2,7 +2,29 @@
   <div class="settings">
     <h1>Vue sort visualizer</h1>
     <hr />
-    <button @click="bubbleSort(array)">Start</button>
+    <div class="d-flex flex-row align-items-center justify-content-start g-5">
+      <div class="form-floating">
+        <input
+          v-model="elementLength"
+          type="number"
+          class="form-control"
+          id="element_length"
+          placeholder="Number of elements"
+        />
+        <label for="element_length">Number of elements</label>
+      </div>
+      <div class="form-floating">
+        <input
+          v-model="interval"
+          type="number"
+          class="form-control"
+          id="delay_interval"
+          placeholder="Number of elements"
+        />
+        <label for="delay_interval">Delay between iterations</label>
+      </div>
+      <button class="btn btn-primary" @click="bubbleSort(array)">Start</button>
+    </div>
   </div>
   <div class="chart" ref="chartContainer">
     <span
@@ -19,17 +41,23 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { fillArray, shuffleArray } from './composables/array';
 
 const chartContainer = ref(null);
-const elementLength = 100;
-const interval = 10;
+const elementLength = ref(100);
+const interval = ref(10);
 
 const array = ref([]);
 
-fillArray(array.value, elementLength);
+fillArray(array.value, elementLength.value);
 shuffleArray(array.value);
+
+watch(elementLength, (updatedVal) => {
+  array.value = [];
+  fillArray(array.value, updatedVal);
+  shuffleArray(array.value);
+});
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -66,7 +94,7 @@ function bubbleSort(array) {
         ).style.backgroundColor = 'blue';
 
         return new Promise((resolve) => {
-          setTimeout(resolve, interval);
+          setTimeout(resolve, interval.value);
         });
       });
     }
@@ -79,7 +107,7 @@ function bubbleSort(array) {
       ).style.backgroundColor = 'green';
       playFrequency(array[i] * 50, 10);
       return new Promise((resolve) => {
-        setTimeout(resolve, interval);
+        setTimeout(resolve, interval.value);
       });
     });
   }
