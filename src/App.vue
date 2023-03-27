@@ -20,6 +20,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import { fillArray, shuffleArray } from './composables/array';
 
 const chartContainer = ref(null);
 const elementLength = 100;
@@ -27,14 +28,8 @@ const interval = 10;
 
 const array = ref([]);
 
-for (let i = 0; i < elementLength; i++) {
-  array.value.push(i + 1);
-}
-
-for (let i = array.value.length - 1; i > 0; i--) {
-  const j = Math.floor(Math.random() * (i + 1));
-  [array.value[i], array.value[j]] = [array.value[j], array.value[i]];
-}
+fillArray(array.value, elementLength);
+shuffleArray(array.value);
 
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
