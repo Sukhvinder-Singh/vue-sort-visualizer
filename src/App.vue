@@ -43,6 +43,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { fillArray, shuffleArray } from './composables/array';
+import { playSound } from './composables/sound';
 
 const chartContainer = ref(null);
 const elementLength = ref(100);
@@ -59,19 +60,6 @@ watch(elementLength, (updatedVal) => {
   shuffleArray(array.value);
 });
 
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-function playFrequency(frequency, duration) {
-  const oscillator = audioCtx.createOscillator();
-  oscillator.type = 'sine';
-  oscillator.frequency.value = frequency; // value in hertz
-  oscillator.connect(audioCtx.destination);
-  oscillator.start();
-  setTimeout(function () {
-    oscillator.stop();
-  }, duration);
-}
-
 let promise = Promise.resolve();
 
 function bubbleSort(array) {
@@ -84,7 +72,7 @@ function bubbleSort(array) {
           array[j + 1] = temp;
         }
 
-        playFrequency(array[j] * 50, 10);
+        playSound(array[j] * 50, 10);
 
         chartContainer.value.querySelector(
           `.chart__bar:nth-of-type(${j + 2})`
@@ -106,7 +94,7 @@ function bubbleSort(array) {
       chartContainer.value.querySelector(
         `.chart__bar:nth-of-type(${i + 1})`
       ).style.backgroundColor = 'green';
-      playFrequency(array[i] * 50, 10);
+      playSound(array[i] * 50, 10);
       return new Promise((resolve) => {
         setTimeout(resolve, interval.value);
       });
