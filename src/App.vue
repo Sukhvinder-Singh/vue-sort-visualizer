@@ -27,16 +27,7 @@
     </div>
   </div>
   <div class="chart" ref="chartContainer">
-    <span
-      class="chart__bar"
-      v-for="(val, index) in array"
-      :key="`bar-${index}`"
-      :style="{
-        width: `calc(${100 / elementLength}% - 2px)`,
-        height: `${(100 / elementLength) * val}%`,
-        left: `${(100 / elementLength) * index}%`
-      }"
-    ></span>
+    <ChartBar :array="array" :element-length="elementLength" />
   </div>
 </template>
 
@@ -44,6 +35,7 @@
 import { ref, watch } from 'vue';
 import { fillArray, shuffleArray } from './composables/array';
 import { playSound } from './composables/sound';
+import ChartBar from './components/ChartBar.vue';
 
 const chartContainer = ref(null);
 const elementLength = ref(100);
