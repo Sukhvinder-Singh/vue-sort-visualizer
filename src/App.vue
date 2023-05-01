@@ -26,7 +26,10 @@
       <button class="btn btn-primary" @click="bubbleSort(array)">Start</button>
     </div>
   </div>
-  <div class="chart" ref="chartContainer">
+  <div
+    class="chart w-100 position-relative border-2 border-bottom border-dark"
+    ref="chartContainer"
+  >
     <ChartBar :array="array" :element-length="elementLength" />
   </div>
 </template>
@@ -103,18 +106,6 @@ body {
 }
 
 .chart {
-  width: 100%;
   height: 400px;
-  position: relative;
-  border-bottom: 1px solid;
-
-  &__bar {
-    position: absolute;
-    bottom: 0;
-    display: block;
-    background-color: #129EBA;
-    border: solid #fff;
-    border-width: 0 1px;
-  }
 }
 </style>
