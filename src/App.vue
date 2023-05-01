@@ -1,8 +1,8 @@
 <template>
-  <div class="settings">
+  <div class="settings mb-5">
     <h1>Vue sort visualizer</h1>
     <hr />
-    <div class="d-flex flex-row align-items-center justify-content-start g-5">
+    <div class="d-flex flex-row align-items-center justify-content-start gap-3">
       <div class="form-floating">
         <input
           v-model="elementLength"
@@ -38,7 +38,7 @@ import { playSound } from './composables/sound';
 import ChartBar from './components/ChartBar.vue';
 
 const chartContainer = ref(null);
-const elementLength = ref(100);
+const elementLength = ref(20);
 const interval = ref(10);
 
 const array = ref([]);
@@ -98,17 +98,23 @@ function bubbleSort(array) {
 <style lang="scss">
 @use '../node_modules/bootstrap/scss/bootstrap';
 
+body {
+  padding: 1rem;
+}
+
 .chart {
   width: 100%;
   height: 400px;
   position: relative;
+  border-bottom: 1px solid;
 
   &__bar {
     position: absolute;
     bottom: 0;
     display: block;
-    background-color: blue;
-    border: 1px solid #fff;
+    background-color: #129EBA;
+    border: solid #fff;
+    border-width: 0 1px;
   }
 }
 </style>
