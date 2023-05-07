@@ -27,7 +27,7 @@
     </div>
   </div>
   <div
-    class="chart w-100 position-relative border-2 border-bottom border-dark"
+    class="chart w-100 position-relative border-2 border-bottom border-dark mt-5"
     ref="chartContainer"
   >
     <ChartBar :array="array" :element-length="elementLength" />
