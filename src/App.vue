@@ -23,9 +23,27 @@
         />
         <label for="delay_interval">Delay between iterations</label>
       </div>
+      <div class="form-floating position-relative">
+        <label for="select_algorithm" class="py-0">
+          <em class="text-muted">Select algorithm</em>
+        </label>
+        <select
+          id="select_algorithm"
+          class="btn position-relative border-primary pt-4 pe-5"
+          v-model="selectedAlgorithm"
+        >
+          <option
+            v-for="(algorithm, index) in algorithmList"
+            :key="`algo--${index}`"
+            :value="algorithm"
+          >
+            {{ algorithm.name }}
+          </option>
+        </select>
+      </div>
       <button
         class="btn btn-primary"
-        @click="bubbleSort(array, promise, chartContainer, interval, playSound)"
+        @click="selectedAlgorithm.algorithm(array, promise, chartContainer, interval, playSound)"
       >
         Start
       </button>
@@ -51,6 +69,13 @@ const elementLength = ref(20);
 const interval = ref(10);
 
 const array = ref([]);
+
+const algorithmList = [
+  { name: 'Bubble sort', algorithm: bubbleSort },
+  { name: 'Bubble sort test', algorithm: bubbleSort }
+];
+
+const selectedAlgorithm = ref(algorithmList[0]);
 
 fillArray(array.value, elementLength.value);
 shuffleArray(array.value);
