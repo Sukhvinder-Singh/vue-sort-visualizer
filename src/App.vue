@@ -23,7 +23,12 @@
         />
         <label for="delay_interval">Delay between iterations</label>
       </div>
-      <button class="btn btn-primary" @click="bubbleSort(array)">Start</button>
+      <button
+        class="btn btn-primary"
+        @click="bubbleSort(array, promise, chartContainer, interval, playSound)"
+      >
+        Start
+      </button>
     </div>
   </div>
   <div
@@ -38,6 +43,7 @@
 import { ref, watch } from 'vue';
 import { fillArray, shuffleArray } from './composables/array';
 import { playSound } from './composables/sound';
+import { bubbleSort } from './composables/bubble-sort';
 import ChartBar from './components/ChartBar.vue';
 
 const chartContainer = ref(null);
@@ -56,46 +62,6 @@ watch(elementLength, (updatedVal) => {
 });
 
 let promise = Promise.resolve();
-
-function bubbleSort(array) {
-  for (let i = 0; i <= array.length - 1; i++) {
-    for (let j = 0; j < array.length - i - 1; j++) {
-      promise = promise.then(() => {
-        if (array[j] > array[j + 1]) {
-          let temp = array[j];
-          array[j] = array[j + 1];
-          array[j + 1] = temp;
-        }
-
-        playSound(array[j] * 50, 10);
-
-        chartContainer.value.querySelector(
-          `.chart__bar:nth-of-type(${j + 2})`
-        ).style.backgroundColor = 'red';
-
-        chartContainer.value.querySelector(
-          `.chart__bar:nth-of-type(${j + 1})`
-        ).style.backgroundColor = 'blue';
-
-        return new Promise((resolve) => {
-          setTimeout(resolve, interval.value);
-        });
-      });
-    }
-  }
-
-  for (let i = 0; i < array.length; i++) {
-    promise = promise.then(() => {
-      chartContainer.value.querySelector(
-        `.chart__bar:nth-of-type(${i + 1})`
-      ).style.backgroundColor = 'green';
-      playSound(array[i] * 50, 10);
-      return new Promise((resolve) => {
-        setTimeout(resolve, interval.value);
-      });
-    });
-  }
-}
 </script>
 
 <style lang="scss">
