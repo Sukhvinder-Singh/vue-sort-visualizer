@@ -62,6 +62,7 @@ import { ref, watch } from 'vue';
 import { fillArray, shuffleArray } from './composables/array';
 import { playSound } from './composables/sound';
 import { bubbleSort } from './composables/bubble-sort';
+import { selectionSort } from './composables/selection-sort';
 import ChartBar from './components/ChartBar.vue';
 
 const chartContainer = ref(null);
@@ -72,7 +73,7 @@ const array = ref([]);
 
 const algorithmList = [
   { name: 'Bubble sort', algorithm: bubbleSort },
-  { name: 'Bubble sort test', algorithm: bubbleSort }
+  { name: 'Selection sort', algorithm: selectionSort }
 ];
 
 const selectedAlgorithm = ref(algorithmList[0]);
