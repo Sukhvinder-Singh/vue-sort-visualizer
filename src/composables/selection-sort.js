@@ -16,6 +16,9 @@ export const selectionSort = (array, promise, chartContainer, interval, playSoun
       let minNumberIndex = i;
 
       for (let j = i + 1; j < n; j++) {
+        chartContainer.querySelector(`.chart__bar:nth-of-type(${j + 1})`).style.backgroundColor =
+          'red';
+
         if (array[j] < array[minNumberIndex]) {
           minNumberIndex = j;
         }
@@ -29,6 +32,22 @@ export const selectionSort = (array, promise, chartContainer, interval, playSoun
 
       playSound(array[i] * 50, 10);
 
+      for (let k = 0; k < i + 1; k++) {
+        chartContainer.querySelector(`.chart__bar:nth-of-type(${k + 1})`).style.backgroundColor =
+          'blue';
+      }
+
+      return new Promise((resolve) => {
+        setTimeout(resolve, interval);
+      });
+    });
+  }
+
+  for (let i = 0; i < array.length; i++) {
+    promise = promise.then(() => {
+      chartContainer.querySelector(`.chart__bar:nth-of-type(${i + 1})`).style.backgroundColor =
+        'green';
+      playSound(array[i] * 50, 10);
       return new Promise((resolve) => {
         setTimeout(resolve, interval);
       });
