@@ -1,3 +1,7 @@
+function delay(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 /**
  *
  * Sort array using selection sort algorithm
@@ -12,16 +16,22 @@ export const selectionSort = (array, promise, chartContainer, interval, playSoun
   let n = array.length;
 
   for (let i = 0; i < n; i++) {
-    promise = promise.then(() => {
+    promise = promise.then(async () => {
       let minNumberIndex = i;
 
       for (let j = i + 1; j < n; j++) {
+        chartContainer.querySelector(`.chart__bar:nth-of-type(${j})`).style.backgroundColor =
+          'blue';
         chartContainer.querySelector(`.chart__bar:nth-of-type(${j + 1})`).style.backgroundColor =
           'red';
 
         if (array[j] < array[minNumberIndex]) {
           minNumberIndex = j;
         }
+
+        await delay(50);
+
+        playSound(array[j] * 50, 10);
       }
 
       if (minNumberIndex != i) {
