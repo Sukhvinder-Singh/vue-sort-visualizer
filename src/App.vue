@@ -43,7 +43,7 @@
       </div>
       <button
         class="btn btn-primary"
-        @click="selectedAlgorithm.algorithm(array, promise, chartContainer, interval, playSound)"
+        @click="selectedAlgorithm.algorithm(array, delay, chartContainer, interval, playSound)"
       >
         Start
       </button>
@@ -71,6 +71,10 @@ const interval = ref(10);
 
 const array = ref([]);
 
+const delay = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};
+
 const algorithmList = [
   { name: 'Bubble sort', algorithm: bubbleSort },
   { name: 'Selection sort', algorithm: selectionSort }
@@ -86,8 +90,6 @@ watch(elementLength, (updatedVal) => {
   fillArray(array.value, updatedVal);
   shuffleArray(array.value);
 });
-
-let promise = Promise.resolve();
 </script>
 
 <style lang="scss">
