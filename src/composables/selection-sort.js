@@ -1,66 +1,50 @@
-function delay(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+import { fillSortedArray } from './fill-sorted-array';
 
 /**
  *
  * Sort array using selection sort algorithm
  *
  * @param {Array<number>} array - Array to sort
- * @param {Promise} promise - Promise object for delay
+ * @param {Function} delay - Delay function callback
  * @param {HTMLElement} chartContainer - Chart container element
  * @param {number} interval - Array swap interval
  * @param {Function} playSound - Play sound function
  */
-export const selectionSort = (array, promise, chartContainer, interval, playSound) => {
+export const selectionSort = async (array, delay, chartContainer, interval, playSound) => {
   let n = array.length;
 
   for (let i = 0; i < n; i++) {
-    promise = promise.then(async () => {
-      let minNumberIndex = i;
+    let minNumberIndex = i;
 
-      for (let j = i + 1; j < n; j++) {
-        chartContainer.querySelector(`.chart__bar:nth-of-type(${j})`).style.backgroundColor =
-          'blue';
-        chartContainer.querySelector(`.chart__bar:nth-of-type(${j + 1})`).style.backgroundColor =
-          'red';
+    for (let j = i + 1; j < n; j++) {
+      chartContainer.querySelector(`.chart__bar:nth-of-type(${j + 1})`).style.backgroundColor =
+        'red';
 
-        if (array[j] < array[minNumberIndex]) {
-          minNumberIndex = j;
-        }
-
-        await delay(50);
-
-        playSound(array[j] * 50, 10);
+      if (array[j] < array[minNumberIndex]) {
+        minNumberIndex = j;
       }
 
-      if (minNumberIndex != i) {
-        let temp = array[i];
-        array[i] = array[minNumberIndex];
-        array[minNumberIndex] = temp;
-      }
+      playSound(array[j] * 50, 10);
+      await delay(interval);
 
-      playSound(array[i] * 50, 10);
+      chartContainer.querySelector(`.chart__bar:nth-of-type(${j + 1})`).style.backgroundColor =
+        'blue';
+    }
 
-      for (let k = 0; k < i + 1; k++) {
-        chartContainer.querySelector(`.chart__bar:nth-of-type(${k + 1})`).style.backgroundColor =
-          'blue';
-      }
+    if (minNumberIndex != i) {
+      let temp = array[i];
+      array[i] = array[minNumberIndex];
+      array[minNumberIndex] = temp;
+    }
 
-      return new Promise((resolve) => {
-        setTimeout(resolve, interval);
-      });
-    });
+    playSound(array[i] * 50, 10);
+
+    for (let k = 0; k < i + 1; k++) {
+      chartContainer.querySelector(`.chart__bar:nth-of-type(${k + 1})`).style.backgroundColor =
+        'blue';
+    }
+    await delay(interval);
   }
 
-  for (let i = 0; i < array.length; i++) {
-    promise = promise.then(() => {
-      chartContainer.querySelector(`.chart__bar:nth-of-type(${i + 1})`).style.backgroundColor =
-        'green';
-      playSound(array[i] * 50, 10);
-      return new Promise((resolve) => {
-        setTimeout(resolve, interval);
-      });
-    });
-  }
+  fillSortedArray(array, delay, chartContainer, interval, playSound);
 };
