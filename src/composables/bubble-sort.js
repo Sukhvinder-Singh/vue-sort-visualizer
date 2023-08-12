@@ -31,5 +31,5 @@ export const bubbleSort = async (array, delay, chartContainer, interval, playSou
     await delay(interval);
   }
 
-  fillSortedArray(array, delay, chartContainer, interval, playSound);
+  fillSortedArray(array, delay, chartContainer, playSound);
 };

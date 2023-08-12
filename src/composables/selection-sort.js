@@ -41,10 +41,10 @@ export const selectionSort = async (array, delay, chartContainer, interval, play
 
     for (let k = 0; k < i + 1; k++) {
       chartContainer.querySelector(`.chart__bar:nth-of-type(${k + 1})`).style.backgroundColor =
-        'blue';
+        '#0091da';
     }
     await delay(interval);
   }
 
-  fillSortedArray(array, delay, chartContainer, interval, playSound);
+  fillSortedArray(array, delay, chartContainer, playSound);
 };
