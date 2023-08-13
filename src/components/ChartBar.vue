@@ -10,7 +10,7 @@
     }"
   >
     <span
-      class="chart__bubble position-absolute start-50 top-0 p-1 bg-danger text-white rounded-circle d-flex flex-row align-items-center justify-content-center"
+      class="chart__bubble position-absolute start-50 top-0 p-3 text-black d-flex flex-row align-items-center justify-content-center"
       ><strong>{{ val }}</strong></span
     >
   </div>
@@ -36,7 +36,7 @@ defineProps({
   }
 
   &__bubble {
-    font-size: 0.75rem;
+    font-size: 1rem;
     transform: translate(-50%, -100%);
     width: 24px;
     height: 24px;
