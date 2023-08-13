@@ -1,4 +1,5 @@
 import { fillSortedArray } from './fill-sorted-array';
+import { COLORS } from './colors';
 
 /**
  *
@@ -21,12 +22,17 @@ export const bubbleSort = async (array, delay, chartContainer, interval, playSou
 
       playSound(array[j] * 50, 10);
 
-      chartContainer.querySelector(`.chart__bar:nth-of-type(${j + 2})`).style.backgroundColor =
-        'red';
       chartContainer.querySelector(`.chart__bar:nth-of-type(${j + 1})`).style.backgroundColor =
-        'blue';
+        COLORS.current;
+      chartContainer.querySelector(`.chart__bar:nth-of-type(${j + 2})`).style.backgroundColor =
+        COLORS.compare;
 
       await delay(interval);
+
+      chartContainer.querySelector(`.chart__bar:nth-of-type(${j + 1})`).style.backgroundColor =
+        COLORS.unsorted;
+      chartContainer.querySelector(`.chart__bar:nth-of-type(${j + 2})`).style.backgroundColor =
+        COLORS.sorted;
     }
     await delay(interval);
   }

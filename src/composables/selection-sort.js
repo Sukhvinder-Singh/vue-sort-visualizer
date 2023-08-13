@@ -1,4 +1,5 @@
 import { fillSortedArray } from './fill-sorted-array';
+import { COLORS } from './colors';
 
 /**
  *
@@ -16,9 +17,12 @@ export const selectionSort = async (array, delay, chartContainer, interval, play
   for (let i = 0; i < n; i++) {
     let minNumberIndex = i;
 
+    chartContainer.querySelector(`.chart__bar:nth-of-type(${i + 1})`).style.backgroundColor =
+      COLORS.compare;
+
     for (let j = i + 1; j < n; j++) {
       chartContainer.querySelector(`.chart__bar:nth-of-type(${j + 1})`).style.backgroundColor =
-        'red';
+        COLORS.current;
 
       if (array[j] < array[minNumberIndex]) {
         minNumberIndex = j;
@@ -28,7 +32,7 @@ export const selectionSort = async (array, delay, chartContainer, interval, play
       await delay(interval);
 
       chartContainer.querySelector(`.chart__bar:nth-of-type(${j + 1})`).style.backgroundColor =
-        'blue';
+        COLORS.unsorted;
     }
 
     if (minNumberIndex != i) {
@@ -41,7 +45,7 @@ export const selectionSort = async (array, delay, chartContainer, interval, play
 
     for (let k = 0; k < i + 1; k++) {
       chartContainer.querySelector(`.chart__bar:nth-of-type(${k + 1})`).style.backgroundColor =
-        '#0091da';
+        COLORS.sorted;
     }
     await delay(interval);
   }

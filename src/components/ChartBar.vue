@@ -32,7 +32,7 @@ defineProps({
 <style lang="scss">
 .chart {
   &__bar {
-    background-color: #129eba;
+    background-color: #00b4d8;
   }
 
   &__bubble {
