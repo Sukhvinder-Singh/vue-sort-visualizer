@@ -1,6 +1,10 @@
 import { COLORS } from './colors';
+import { useTimerStore } from '../stores/store';
 
 export const fillSortedArray = async (array, delay, chartContainer, playSound) => {
+  const timer = useTimerStore();
+  timer.isTimerRunning = false;
+
   for (let i = 0; i < array.length; i++) {
     chartContainer.querySelector(`.chart__bar:nth-of-type(${i + 1})`).style.backgroundColor =
       COLORS.completed;
@@ -8,4 +12,3 @@ export const fillSortedArray = async (array, delay, chartContainer, playSound) =
     await delay(10);
   }
 };
-  

@@ -43,10 +43,19 @@
       </div>
       <button
         class="btn btn-primary"
-        @click="selectedAlgorithm.algorithm(array, delay, chartContainer, interval, playSound)"
+        @click="
+          selectedAlgorithm.algorithm(array, delay, chartContainer, interval, playSound);
+          timer.isTimerRunning = true;
+        "
       >
         Start
       </button>
+    </div>
+    <hr />
+    <div class="row">
+      <p class="mb-0 text-center lead">
+        Elapsed time: <strong>{{ (timer.currentTime / 1000).toPrecision(5) }}s</strong>
+      </p>
     </div>
   </div>
   <div
@@ -63,7 +72,8 @@ import { fillArray, shuffleArray } from './composables/array';
 import { playSound } from './composables/sound';
 import { bubbleSort } from './composables/bubble-sort';
 import { selectionSort } from './composables/selection-sort';
-import { mergeSort } from "./composables/merge-sort";
+import { mergeSort } from './composables/merge-sort';
+import { useTimerStore } from './stores/store';
 import ChartBar from './components/ChartBar.vue';
 
 const chartContainer = ref(null);
@@ -71,6 +81,7 @@ const elementLength = ref(20);
 const interval = ref(10);
 
 const array = ref([]);
+const timer = useTimerStore();
 
 const delay = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
