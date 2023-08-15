@@ -35,3 +35,17 @@ export const useTimerStore = defineStore('timer', () => {
     currentTime
   };
 });
+
+export const useHistoryStore = defineStore('historyStore', () => {
+  const currentAlgorithm = ref({
+    algorithm: null,
+    elapsedTime: null
+  });
+
+  const history = ref([]);
+
+  return {
+    history,
+    currentAlgorithm
+  };
+});

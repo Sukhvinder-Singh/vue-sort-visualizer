@@ -45,7 +45,10 @@
         class="btn btn-primary"
         @click="
           selectedAlgorithm.algorithm(array, delay, chartContainer, interval, playSound);
-          timer.isTimerRunning = true;
+          currentTime = 0;
+          timerStore.isTimerRunning = true;
+          historyStore.currentAlgorithm.algorithm = selectedAlgorithm.name;
+          historyStore.currentAlgorithm.elapsedTime = 0;
         "
       >
         Start
@@ -53,7 +56,7 @@
       <button
         class="btn btn-primary"
         @click="reshuffleArray(array, chartContainer)"
-        :disabled="timer.isTimerRunning"
+        :disabled="timerStore.isTimerRunning"
       >
         Randomize
       </button>
@@ -61,7 +64,7 @@
     <hr />
     <div class="row">
       <p class="mb-0 text-center lead">
-        Elapsed time: <strong>{{ (timer.currentTime / 1000).toPrecision(5) }}s</strong>
+        Elapsed time: <strong>{{ (currentTime / 1000).toPrecision(5) }}s</strong>
       </p>
     </div>
   </div>
@@ -70,6 +73,11 @@
     ref="chartContainer"
   >
     <ChartBar :array="array" :element-length="elementLength" />
+  </div>
+  <hr />
+  <div>
+    <h2>History</h2>
+    {{ historyStore.history }}
   </div>
 </template>
 
@@ -80,7 +88,8 @@ import { playSound } from './composables/sound';
 import { bubbleSort } from './composables/bubble-sort';
 import { selectionSort } from './composables/selection-sort';
 import { mergeSort } from './composables/merge-sort';
-import { useTimerStore } from './stores/store';
+import { useTimerStore, useHistoryStore } from './stores/store';
+import { storeToRefs } from 'pinia';
 import ChartBar from './components/ChartBar.vue';
 
 const chartContainer = ref(null);
@@ -88,7 +97,11 @@ const elementLength = ref(20);
 const interval = ref(10);
 
 const array = ref([]);
-const timer = useTimerStore();
+
+const timerStore = useTimerStore();
+const { currentTime } = storeToRefs(timerStore);
+
+const historyStore = useHistoryStore();
 
 const delay = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -109,6 +122,10 @@ watch(elementLength, (updatedVal) => {
   array.value = [];
   fillArray(array.value, updatedVal);
   shuffleArray(array.value);
+});
+
+watch(currentTime, (newTime) => {
+  historyStore.currentAlgorithm.elapsedTime = newTime;
 });
 </script>
 
