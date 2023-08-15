@@ -63,6 +63,7 @@ import { fillArray, shuffleArray } from './composables/array';
 import { playSound } from './composables/sound';
 import { bubbleSort } from './composables/bubble-sort';
 import { selectionSort } from './composables/selection-sort';
+import { mergeSort } from "./composables/merge-sort";
 import ChartBar from './components/ChartBar.vue';
 
 const chartContainer = ref(null);
@@ -77,7 +78,8 @@ const delay = (ms) => {
 
 const algorithmList = [
   { name: 'Bubble sort', algorithm: bubbleSort },
-  { name: 'Selection sort', algorithm: selectionSort }
+  { name: 'Selection sort', algorithm: selectionSort },
+  { name: 'Merge sort', algorithm: mergeSort }
 ];
 
 const selectedAlgorithm = ref(algorithmList[0]);
