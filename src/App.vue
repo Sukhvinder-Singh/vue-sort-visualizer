@@ -50,6 +50,13 @@
       >
         Start
       </button>
+      <button
+        class="btn btn-primary"
+        @click="reshuffleArray(array, chartContainer)"
+        :disabled="timer.isTimerRunning"
+      >
+        Randomize
+      </button>
     </div>
     <hr />
     <div class="row">
@@ -68,7 +75,7 @@
 
 <script setup>
 import { ref, watch } from 'vue';
-import { fillArray, shuffleArray } from './composables/array';
+import { fillArray, shuffleArray, reshuffleArray } from './composables/array';
 import { playSound } from './composables/sound';
 import { bubbleSort } from './composables/bubble-sort';
 import { selectionSort } from './composables/selection-sort';

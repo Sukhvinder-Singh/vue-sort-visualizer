@@ -1,3 +1,5 @@
+import { COLORS } from './colors';
+
 /**
  *
  * Fill an array with values starting from 0 to any length in ascending order
@@ -21,5 +23,24 @@ export const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [array[i], array[j]] = [array[j], array[i]];
+  }
+};
+
+/**
+ *
+ * Reshuffle Array
+ *
+ * @param {Array} array - Array to reshuffle
+ * @param {HTMLElement} chartContainer - Chart container element
+ */
+export const reshuffleArray = (array, chartContainer) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+
+  for (let i = 0; i < array.length; i++) {
+    chartContainer.querySelector(`.chart__bar:nth-of-type(${i + 1})`).style.backgroundColor =
+      COLORS.unsorted;
   }
 };
