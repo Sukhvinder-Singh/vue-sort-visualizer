@@ -48,6 +48,8 @@
           currentTime = 0;
           timerStore.isTimerRunning = true;
           historyStore.currentAlgorithm.algorithm = selectedAlgorithm.name;
+          historyStore.currentAlgorithm.interval = interval;
+          historyStore.currentAlgorithm.elementLength = array.length;
           historyStore.currentAlgorithm.elapsedTime = 0;
         "
       >
@@ -77,7 +79,32 @@
   <hr />
   <div>
     <h2>History</h2>
-    {{ historyStore.history }}
+    <ul class="list-unstyled">
+      <li>
+        <div class="d-flex flex-row align-items-center justify-content-start">
+          <div class="border border-1 p-2" style="width: 200px"><h4>Algorithm</h4></div>
+          <div class="border border-1 p-2" style="width: 200px"><h4>Element length</h4></div>
+          <div class="border border-1 p-2" style="width: 200px"><h4>Interval (ms)</h4></div>
+          <div class="border border-1 p-2" style="width: 200px"><h4>Total time (ms)</h4></div>
+        </div>
+      </li>
+      <li v-for="(item, index) in historyStore.history" :key="`history--${index}`">
+        <div class="d-flex flex-row align-items-center justify-content-start">
+          <div class="border border-1 p-2" style="width: 200px">
+            <p class="m-0">{{ item.algorithm }}</p>
+          </div>
+          <div class="border border-1 p-2" style="width: 200px">
+            <p class="m-0">{{ item.elementLength }}</p>
+          </div>
+          <div class="border border-1 p-2" style="width: 200px">
+            <p class="m-0">{{ item.interval }}</p>
+          </div>
+          <div class="border border-1 p-2" style="width: 200px">
+            <p class="m-0">{{ item.elapsedTime }}</p>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
 </template>
 
