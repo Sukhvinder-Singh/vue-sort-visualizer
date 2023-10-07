@@ -91,8 +91,6 @@ export const mergeSort = async (array, delay, chartContainer, interval, playSoun
           COLORS.sorted;
 
         playSound(array[k] * 50, 10);
-
-        await delay(1);
       }
     }
 
@@ -110,7 +108,7 @@ export const mergeSort = async (array, delay, chartContainer, interval, playSoun
     chartContainer.querySelector(`.chart__bar:nth-of-type(${i + 1})`).style.backgroundColor =
       COLORS.sorted;
 
-    await delay(interval);
+    await delay(1);
   }
 
   fillSortedArray(array, delay, chartContainer, playSound);
